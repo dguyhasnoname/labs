@@ -1,0 +1,32 @@
+- hosts:
+    - lab
+  become: yes
+  become_user: root
+  tasks:
+    - name: disable the default welcome page.
+      shell: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.backup
+      ignore_errors: true
+    - name: add a custom page
+      template:
+        src: templates/test.html.j2
+        dest: /var/www/html/test.html
+        owner: root
+        group: root
+        mode: 0644
+    - name: change the default page for apahce
+      lineinfile:
+        path: /etc/httpd/conf/httpd.conf
+        regexp: '^DirectoryIndex index.html'
+        line: 'DirectoryIndex test.html index.html'
+        owner: root
+        group: root
+        mode: 
+    - name: restating apache
+      service:
+        name: httpd
+        state: restarted
+
+      
+          
+    
+      
