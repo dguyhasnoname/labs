@@ -2,6 +2,7 @@
     - lab
   become: yes
   become_user: root
+  gather_facts: no
   tasks:
     - name: disable the default welcome page.
       shell: mv /etc/httpd/conf.d/welcome.conf /etc/httpd/conf.d/welcome.backup

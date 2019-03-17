@@ -1,0 +1,15 @@
+- hosts:
+    - lab
+  become: yes
+  become_user: root
+  gather_facts: no
+  tasks:
+    - name: create group
+      group:
+        name: "{{ group_name }}"
+        state: present
+    - name: create user
+      user:
+        name: "{{ user_name }}"
+        comment: "{{ user_name }}"
+        group: "{{ group_name }}"
