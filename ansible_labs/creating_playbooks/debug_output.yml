@@ -1,0 +1,15 @@
+- hosts:
+    - lab
+  become: yes
+  become_user: root
+  gather_facts: no  
+  tasks:
+  - name: curl check
+    shell: curl -I "http://{{ groups['lab'][0] }}"
+    register: curl
+
+  - debug: msg={{ curl.stdout }}
+
+  - name: uri check
+    uri:
+      url: "http://{{ groups['lab'][0] }}"
